@@ -1,7 +1,7 @@
 //importando o módulo express
 let  express = require('express');
 let port = 3000; //porta de conexao, igual o xampp
-
+//add pasta de de plugins e front
 //criar um objeto
 let app = express();
 
