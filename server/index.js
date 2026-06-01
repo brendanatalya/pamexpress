@@ -9,7 +9,15 @@ let app = express();
 
 //o primeiro parametro é a requisição, oque vc vai enviar, entendeu? quanod chegar la no servidor essa resposta vai ser tratada.
 app.get( "/",( req, resp )=> {
-    resp.send("Pagina de resposta"); //a resposta que o servidor vai enviar para o cliente
+    resp.json("Pagina de resposta"); //a resposta que o servidor vai enviar para o cliente
+});
+
+app.post( "/alunos", (req, resp) => {
+    let dadoshttp = req.body.nome;
+    resp.json({
+        "servidor" : "inserir",
+        "dados" : dadoshttp
+    });
 });
 
 //criar o servidor
