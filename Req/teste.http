@@ -1,0 +1,20 @@
+###
+GET http://localhost:3000
+
+
+###
+//via url nao fumnciona ein
+POST http://localhost:3000/Alunos
+Content-Type: application/json
+
+{
+    "nome":"José",
+    "email" :"josene@gmail.com" 
+}
+
+###
+PUT http://localhost:3000/update/2
+
+
+###
+DELETE http://localhost:3000/delete/10
