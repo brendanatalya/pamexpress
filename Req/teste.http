@@ -3,13 +3,12 @@ GET http://localhost:3000
 
 
 ###
-//via url nao fumnciona ein
 POST http://localhost:3000/Alunos
 Content-Type: application/json
 
 {
-    "nome":"José",
-    "email" :"josene@gmail.com" 
+    "nome":"Brenda Maluisa",
+    "email" :"oiii@gmail.com" 
 }
 
 ###
