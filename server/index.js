@@ -1,26 +1,75 @@
-//importando o módulo express
-let  express = require('express');
-let port = 3000; //porta de conexao, igual o xampp
-//add pasta de de plugins e front
-//criar um objeto
+// importando o modulo
+let express = require('express');
+let port = 3000;
+//IMPORTAR O BANCO
+const db = require('./bd');
+
+// criar um objeto
 let app = express();
+app.use(express.json());
 
-//criar uma rota(metodo) simples
-
-//o primeiro parametro é a requisição, oque vc vai enviar, entendeu? quanod chegar la no servidor essa resposta vai ser tratada.
-app.get( "/",( req, resp )=> {
-    resp.json("Pagina de resposta"); //a resposta que o servidor vai enviar para o cliente
+// criar uma rota(metodo)  simples 
+app.get("/", async (req, resp) => {
+    try {
+        const [rows] = await db.query ("SELECT * FROM ALUNO");
+        resp.json(rows);
+    } catch (erros) {
+        resp.status(500).json({error: error.message })
+    }
+    resp.json({ "titulo": "Página de Resposta" });
 });
 
-app.post( "/alunos", (req, resp) => {
-    let dadoshttp = req.body.nome;
+
+//  inserir dados
+
+app.post("/Alunos", async (req, resp) => {
+    
+      try {
+        const { nome, email } = req.body;
+
+        const sql = "INSERT INTO  ALUNO (NOME, EMAIL) VALUES (?, ?)";
+
+        const resultado = await db.query(sql, [nome, email]);
+
+        resp.json({
+            "servidor": "cadastrado",
+        });
+    } catch (error) {
+        resp.json({
+            erro: error.message
+        });
+    }
+})
+
+// para alterar dados
+app.put("/update/:id", async (req, resp) => {
+    // pegar o id 
+    let id = req.params.id;
     resp.json({
-        "servidor" : "inserir",
-        "dados" : dadoshttp
+        "update": "alterado",
+        "id": id
     });
-});
+})
 
-//criar o servidor
+// deletar
+app.delete("/delete/:id", async (req,resp) => {
+    try{
+        let id = req.params.id;
+        const sql = "DELETE FROM ALUNO WHERE ID = ?";
+        const resultado = await db.query(sql, [id]);
+        resp.json({
+            "status": "deletado",
+            "id" : id
+        })
+    } catch (error) {
+        resp.json({
+            erro : error.message
+        });
+    }
+})
+
+// criar o servidor
 app.listen(port, () => {
-    console.log(`Executar o servidor endereço\n http://localhost:${port}`);
+    console.log(`executar o servidor endereço \n
+                  http://localhost:${port} `);
 });
