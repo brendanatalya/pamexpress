@@ -1,0 +1,19 @@
+###
+GET http://localhost:3000
+
+
+###
+POST http://localhost:3000/Alunos
+Content-Type: application/json
+
+{
+    "nome":"Brenda Maluisa",
+    "email" :"oiii@gmail.com" 
+}
+
+###
+PUT http://localhost:3000/update/2
+
+
+###
+DELETE http://localhost:3000/delete/10
